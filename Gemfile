@@ -7,9 +7,11 @@ gem 'rails', '~> 6.0.3', '>= 6.0.3.4'
 gem 'puma', '~> 4.1'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem "typhoeus"
+gem 'faraday'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'pry-meta'
 end
 
 group :development do
@@ -20,6 +22,8 @@ end
 
 group :test do
   gem 'rspec-rails'
+  gem 'webmock'
+  gem 'simplecov'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
