@@ -1,9 +1,6 @@
 class SocialNetworksController < ApplicationController
   def index
-    render json: {
-      twitter: [],
-      facebook: [],
-      instagram: []
-    }
+    http_request = HttpRequest.new(url: "https://takehome.io")
+    render json: SocialNetworkService.new(http_request).call
   end
 end
