@@ -1,24 +1,19 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+1 - Install all dependencies:
 
-Things you may want to cover:
+`bundle install`
 
-* Ruby version
+2 - Run test suite:
 
-* System dependencies
+`bundle exec rspec`
 
-* Configuration
+Should be all green with 100% of coverage
 
-* Database creation
+3 - Start the server:
 
-* Database initialization
+`bundle exec rails s`
 
-* How to run the test suite
+4 - Execute curl request:
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+`curl http://localhost:3000`
