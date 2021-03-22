@@ -3,21 +3,7 @@ require 'rails_helper'
 describe "HttpRequest", :adapter do
   subject { HttpRequest.new(url: "https://takehome.io") }
 
-  let(:stub_twitter_feed) do
-    stub_request(:get, "https://takehome.io/twitter").with(
-          headers: {
-            'Expect'=>'',
-            'User-Agent'=>'Faraday v1.3.0'
-          }).to_return(status: 200, body: [{username: "someone", tweet: "blabla"}])
-  end
-
-  let(:stub_facebook_feed) do
-   stub_request(:get, "https://takehome.io/facebook").with(
-          headers: {
-            'Expect'=>'',
-            'User-Agent'=>'Faraday v1.3.0'
-          }).to_return(status: 200, body: [{name: "Some friend", status: "working hard"}])
-  end
+  include_context 'http requests'
 
   describe "#run_in_parallel" do
     before do
@@ -26,28 +12,27 @@ describe "HttpRequest", :adapter do
     end
 
     let(:endpoints) { %w(twitter facebook) }
+    let(:responses) { subject.run_in_parallel(endpoints: endpoints) }
+    let(:first_response) { responses.first }
+    let(:last_response) { responses.last }
 
     it "processes endpoints request" do
-      responses = subject.run_in_parallel(endpoints: endpoints)
-
-      first_response = responses.first
       expect(first_response[:endpoint]).to eql("twitter")
-      expect(first_response[:data]).to include(body: [{tweet: "blabla", username: "someone"}])
+      expect(first_response[:data]).to include(body: twitter_body.to_json)
 
-      last_response = responses.last
       expect(last_response[:endpoint]).to eql("facebook")
-      expect(last_response[:data]).to include(body: [{name: "Some friend", status: "working hard"}])
+      expect(last_response[:data]).to include(body: facebook_body.to_json)
     end
   end
 
   describe "#run_single_request" do
     before { stub_facebook_feed }
 
-    it "process a single request" do
-      response = subject.run_single_request(endpoint: "facebook")
+    let(:response) { subject.run_single_request(endpoint: "facebook") }
 
+    it "process a single request" do
       expect(response[:endpoint]).to eql("facebook")
-      expect(response[:data]).to include(body: [{name: "Some friend", status: "working hard"}])
+      expect(response[:data]).to include(body: facebook_body.to_json)
     end
   end
 end

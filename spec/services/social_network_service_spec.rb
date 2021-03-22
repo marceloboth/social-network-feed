@@ -5,38 +5,7 @@ describe "SocialNetworksService", :service do
 
   let(:http_request) { HttpRequest.new(url: "https://takehome.io") }
 
-  let(:stub_twitter_feed) do
-    stub_request(:get, "https://takehome.io/twitter").with(
-          headers: {
-            'Expect'=>'',
-            'User-Agent'=>'Faraday v1.3.0'
-          }).to_return(status: 200, body: [{username: "someone", tweet: "blabla"}].to_json)
-  end
-
-  let(:stub_facebook_feed) do
-   stub_request(:get, "https://takehome.io/facebook").with(
-          headers: {
-            'Expect'=>'',
-            'User-Agent'=>'Faraday v1.3.0'
-          }).to_return(status: 200, body: [{name: "Some friend", status: "working hard"}].to_json)
-  end
-
-  let(:stub_with_one_failed_facebook_feed) do
-   stub_request(:get, "https://takehome.io/facebook").with(
-          headers: {
-            'Expect'=>'',
-            'User-Agent'=>'Faraday v1.3.0'
-          }).to_return(status: 500, body: "I am trapped in a social media factory send help").times(2).then
-          .to_return(status: 200, body: [{name: "Some friend", status: "working hard"}].to_json)
-  end
-
-  let(:stub_instagram_feed) do
-   stub_request(:get, "https://takehome.io/instagram").with(
-          headers: {
-            'Expect'=>'',
-            'User-Agent'=>'Faraday v1.3.0'
-          }).to_return(status: 404, body: "Page not found")
-  end
+  include_context 'http requests'
 
   describe "#call" do
     before do
@@ -47,8 +16,8 @@ describe "SocialNetworksService", :service do
 
     it "returns a hash with all social medias" do
       expect(subject.call).to eq({
-        twitter:[{tweet: "blabla", username: "someone"}],
-        facebook:[{name: "Some friend", status: "working hard"}],
+        twitter: twitter_body,
+        facebook: facebook_body,
         instagram:[]
       })
     end
@@ -63,8 +32,8 @@ describe "SocialNetworksService", :service do
 
     it "returns a hash with all social medias" do
       expect(subject.call).to eq({
-        twitter:[{tweet: "blabla", username: "someone"}],
-        facebook:[{name: "Some friend", status: "working hard"}],
+        twitter: twitter_body,
+        facebook: facebook_body,
         instagram:[]
       })
     end
