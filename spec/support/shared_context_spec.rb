@@ -14,7 +14,7 @@ shared_context 'http requests' do
   end
 
   let(:stub_twitter_feed) do
-    stub_request(:get, "https://takehome.io/twitter").with(
+    stub_request(:get, "#{TAKEHOME_URL}/twitter").with(
       headers: {
         'Expect'=>'',
         'User-Agent'=>'Faraday v1.3.0'
@@ -22,7 +22,7 @@ shared_context 'http requests' do
   end
 
   let(:stub_facebook_feed) do
-    stub_request(:get, "https://takehome.io/facebook").with(
+    stub_request(:get, "#{TAKEHOME_URL}/facebook").with(
       headers: {
         'Expect'=>'',
         'User-Agent'=>'Faraday v1.3.0'
@@ -30,7 +30,7 @@ shared_context 'http requests' do
   end
 
   let(:stub_with_one_failed_facebook_feed) do
-    stub_request(:get, "https://takehome.io/facebook").with(
+    stub_request(:get, "#{TAKEHOME_URL}/facebook").with(
       headers: {
         'Expect'=>'',
         'User-Agent'=>'Faraday v1.3.0'
@@ -39,7 +39,7 @@ shared_context 'http requests' do
   end
 
   let(:stub_instagram_feed) do
-    stub_request(:get, "https://takehome.io/instagram").with(
+    stub_request(:get, "#{TAKEHOME_URL}/instagram").with(
       headers: {
         'Expect'=>'',
         'User-Agent'=>'Faraday v1.3.0'

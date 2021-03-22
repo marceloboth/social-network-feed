@@ -3,11 +3,9 @@ require 'faraday'
 class HttpRequest
   attr_reader :conn, :responses
 
-  MAX_RETRY = 5
-
   def initialize(url:)
     @conn = Faraday.new(url: url) do |builder|
-      builder.request :retry, max: MAX_RETRY, interval: 0.05,
+      builder.request :retry, max: MAX_RETRIES, interval: 0.05,
         interval_randomness: 0.5, backoff_factor: 2,
         exceptions: [ResponseError, 'Timeout::Error']
 

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe "HttpRequest", :adapter do
-  subject { HttpRequest.new(url: "https://takehome.io") }
+  subject { HttpRequest.new(url: TAKEHOME_URL) }
 
   include_context 'http requests'
 

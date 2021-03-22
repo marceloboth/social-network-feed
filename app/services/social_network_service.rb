@@ -1,7 +1,4 @@
 class SocialNetworkService
-  SOCIAL_MEDIAS = %w(twitter facebook instagram)
-  MAX_RETRIES = 5
-
   attr_accessor :parsed_response
 
   def initialize(http_concurrent)
@@ -10,7 +7,7 @@ class SocialNetworkService
   end
 
   def call
-    responses = @http_concurrent.run_in_parallel(endpoints: SOCIAL_MEDIAS)
+    responses = @http_concurrent.run_in_parallel(endpoints: TAKEHOME_ENDPOINTS)
     responses = validate_responses(responses)
     format_response(responses)
   end

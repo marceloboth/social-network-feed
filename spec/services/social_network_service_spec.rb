@@ -3,7 +3,7 @@ require 'rails_helper'
 describe "SocialNetworksService", :service do
   subject { SocialNetworkService.new(http_request) }
 
-  let(:http_request) { HttpRequest.new(url: "https://takehome.io") }
+  let(:http_request) { HttpRequest.new(url: TAKEHOME_URL) }
 
   include_context 'http requests'
 
